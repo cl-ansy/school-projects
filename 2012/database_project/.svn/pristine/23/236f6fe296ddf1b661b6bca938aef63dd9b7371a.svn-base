@@ -1,0 +1,33 @@
+<!-- templates/users.html -->
+{% extends "base.html" %}
+{% block content_pane %}
+	<h2>User Profiles:</h2>
+	<table>
+		<thead>
+			<th>Username:</th>
+			<th>Leagues:</th>
+			<th>Date Joined:</th>
+			<th>Last Login:</th>
+			<th>Profile:</th>
+		</thead>
+		<tbody>
+			{% for user_profile in user_profiles %}
+				<tr>
+					<td>{{user_profile.user.username}}</td>
+					<td>
+						<ul>
+						{% for league in user_profile.leagues_enrolled.all %}
+							<li>{{league.name}}</li>
+						{% endfor %}
+						</ul>
+					</td>
+					<td>{{user_profile.user.date_joined}}</td>
+					<td>{{user_profile.user.last_login}}</td>
+					<td>
+						<a href="{{user_profile.get_absolute_url}}">Profile</a> 
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}

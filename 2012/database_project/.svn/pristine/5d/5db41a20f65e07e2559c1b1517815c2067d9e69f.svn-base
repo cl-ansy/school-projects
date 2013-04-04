@@ -1,0 +1,79 @@
+BEGIN;
+CREATE TABLE `challenge_site_userprofile_friends` (
+    `id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    `from_userprofile_id` integer NOT NULL,
+    `to_userprofile_id` integer NOT NULL,
+    UNIQUE (`from_userprofile_id`, `to_userprofile_id`)
+)
+;
+CREATE TABLE `challenge_site_userprofile` (
+    `id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    `dob` date,
+    `user_id` integer NOT NULL UNIQUE
+)
+;
+ALTER TABLE `challenge_site_userprofile` ADD CONSTRAINT `user_id_refs_id_68c33420` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`);
+ALTER TABLE `challenge_site_userprofile_friends` ADD CONSTRAINT `from_userprofile_id_refs_id_3f3ff033` FOREIGN KEY (`from_userprofile_id`) REFERENCES `challenge_site_userprofile` (`id`);
+ALTER TABLE `challenge_site_userprofile_friends` ADD CONSTRAINT `to_userprofile_id_refs_id_3f3ff033` FOREIGN KEY (`to_userprofile_id`) REFERENCES `challenge_site_userprofile` (`id`);
+CREATE TABLE `challenge_site_league_members` (
+    `id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    `league_id` integer NOT NULL,
+    `userprofile_id` integer NOT NULL,
+    UNIQUE (`league_id`, `userprofile_id`)
+)
+;
+ALTER TABLE `challenge_site_league_members` ADD CONSTRAINT `userprofile_id_refs_id_127824fb` FOREIGN KEY (`userprofile_id`) REFERENCES `challenge_site_userprofile` (`id`);
+CREATE TABLE `challenge_site_league` (
+    `id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    `name` varchar(200) NOT NULL,
+    `description` varchar(200) NOT NULL,
+    `owner_id` integer NOT NULL
+)
+;
+ALTER TABLE `challenge_site_league` ADD CONSTRAINT `owner_id_refs_id_66c5e44f` FOREIGN KEY (`owner_id`) REFERENCES `challenge_site_userprofile` (`id`);
+ALTER TABLE `challenge_site_league_members` ADD CONSTRAINT `league_id_refs_id_76475f7f` FOREIGN KEY (`league_id`) REFERENCES `challenge_site_league` (`id`);
+CREATE TABLE `challenge_site_challenge` (
+    `id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    `name` varchar(200) NOT NULL,
+    `description` varchar(200) NOT NULL,
+    `score` integer NOT NULL,
+    `starting_time` datetime NOT NULL,
+    `ending_time` datetime NOT NULL,
+    `league_id` integer NOT NULL,
+    `owner_id` integer NOT NULL
+)
+;
+ALTER TABLE `challenge_site_challenge` ADD CONSTRAINT `owner_id_refs_id_7d499392` FOREIGN KEY (`owner_id`) REFERENCES `challenge_site_userprofile` (`id`);
+ALTER TABLE `challenge_site_challenge` ADD CONSTRAINT `league_id_refs_id_60cf6e6a` FOREIGN KEY (`league_id`) REFERENCES `challenge_site_league` (`id`);
+CREATE TABLE `challenge_site_challengeentry` (
+    `id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    `response` varchar(2000) NOT NULL,
+    `time_started` datetime NOT NULL,
+    `time_completed` datetime NOT NULL,
+    `correct` bool NOT NULL,
+    `challenge_id` integer NOT NULL,
+    `owner_id` integer NOT NULL
+)
+;
+ALTER TABLE `challenge_site_challengeentry` ADD CONSTRAINT `owner_id_refs_id_147f2aff` FOREIGN KEY (`owner_id`) REFERENCES `challenge_site_userprofile` (`id`);
+ALTER TABLE `challenge_site_challengeentry` ADD CONSTRAINT `challenge_id_refs_id_1927ae16` FOREIGN KEY (`challenge_id`) REFERENCES `challenge_site_challenge` (`id`);
+CREATE TABLE `challenge_site_validentry` (
+    `id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    `name` varchar(200) NOT NULL,
+    `description` varchar(200) NOT NULL,
+    `response` varchar(2000) NOT NULL,
+    `challenge_id` integer NOT NULL,
+    `owner_id` integer NOT NULL
+)
+;
+ALTER TABLE `challenge_site_validentry` ADD CONSTRAINT `owner_id_refs_id_757c1b06` FOREIGN KEY (`owner_id`) REFERENCES `challenge_site_userprofile` (`id`);
+ALTER TABLE `challenge_site_validentry` ADD CONSTRAINT `challenge_id_refs_id_208e63eb` FOREIGN KEY (`challenge_id`) REFERENCES `challenge_site_challenge` (`id`);
+CREATE INDEX `challenge_site_league_5d52dd10` ON `challenge_site_league` (`owner_id`);
+CREATE INDEX `challenge_site_challenge_7cc33bab` ON `challenge_site_challenge` (`league_id`);
+CREATE INDEX `challenge_site_challenge_5d52dd10` ON `challenge_site_challenge` (`owner_id`);
+CREATE INDEX `challenge_site_challengeentry_22741432` ON `challenge_site_challengeentry` (`challenge_id`);
+CREATE INDEX `challenge_site_challengeentry_5d52dd10` ON `challenge_site_challengeentry` (`owner_id`);
+CREATE INDEX `challenge_site_validentry_22741432` ON `challenge_site_validentry` (`challenge_id`);
+CREATE INDEX `challenge_site_validentry_5d52dd10` ON `challenge_site_validentry` (`owner_id`);
+COMMIT;
+

@@ -1,0 +1,60 @@
+<!--templates/registration/login.html-->
+{% extends "base.html" %}
+{% block head %}
+	{{block.super}}
+	<style>
+		#register_container {
+			float:left;
+			padding: 5 5 5 5;
+		}
+		input#id_username, label[for=id_username] {
+			display:inline;
+			width:inherit;
+		}
+		td br {
+			display:none;
+		}
+		.helptext {
+			display:block;
+			padding: 10 0 0 10;
+		}
+		table#register_table {
+			border-width:1px;
+			border-color: black;
+		}
+		table#register_table td{
+			width:250px;
+			vertical-align: top;
+			text-align: left;
+		}
+		table#register_table th {
+			border-width:1px;
+			width:100px;
+			vertical-align: top;
+			text-align: left;
+		}
+		input#id_username {
+			width:auto;
+		}
+	</style>
+{% endblock %}
+{% block header_login %}
+{% endblock %}
+{% block content_pane %}
+<div id="register_container">
+	<h3 id="register">Register</h3>
+	<form action="/register/" method="post">
+		{% csrf_token %}
+		<input type="hidden" name="next" value="/"/>
+		<table id="register_table">
+			{{form.as_table}}
+			<tfoot>
+				<th></th>
+				<td>
+					<input id="submit_button" type="submit" value="Register" />
+				</td>
+			</tfoot>
+		</table>
+	</form>
+</div>
+{% endblock %}

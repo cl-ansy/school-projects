@@ -1,0 +1,21 @@
+<!-- templates/league/league_detail.html -->
+{% extends "base.html" %}
+{% block content_pane %}
+	<h2>League: {{league.name}}</h2>
+	<table>
+		<thead>
+			<tr>
+				<th>Description:</th>
+				<th>Owner:</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>{{league.description}}</td>
+				<td>
+					{{league.owner.user.username}}
+				</td>
+			</tr>
+		</tbody>
+	</table>
+{% endblock %}

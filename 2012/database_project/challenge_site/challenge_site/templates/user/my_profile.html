@@ -1,0 +1,111 @@
+<!-- templates/index.html -->
+{% extends "base.html" %}
+{% block content_pane %}
+	<h2>{{request.user.username}}'s Profile</h2>
+	<div>
+		{% if user_profile.dob %}
+			<h4>Date of Birth: {{user_profile.dob}}</h4>
+		{% endif %}
+		<h3>My Leagues:</h3>
+		{% if user_profile.leagues_enrolled.all %}
+			<table>
+				<thead>
+					<tr>
+						<th>Name:</th>
+						<th>Description:</th>
+						<th>Owner?</th>
+						<th>More Info:</th>
+					</tr>
+				</thead>
+				<tbody>
+				{% for league in user_profile.leagues_enrolled.all %}
+					<tr>
+						<td>{{league.name}}</td>
+						<td>{{league.description}}</td>
+						<td>
+							{% if league.owner == user_profile %}
+								Yes.
+							{% else %}
+								No.
+							{% endif %}
+						</td>
+						<td>
+							<a href={{league.get_absolute_url}}>More Info</a>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		{% else %}
+			<h4>You are not enrolled in any leagues.</h4>
+		{% endif %}
+			
+		<h3>My Created Challenges:</h3>
+		{% if user_profile.challenges_created.all %}
+			<table>
+				<thead>
+					<tr>
+						<th>Name:</th>
+						<th>Description:</th>
+						<th>League Name:</th>
+						<th>Score:</th>
+						<th>Starting Time:</th>
+						<th>Ending Time:</th>
+						<th>More Info:</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for challenge in user_profile.challenges_created.all %}
+						<tr>
+							<td>{{challenge.name}}</td>
+							<td>{{challenge.description}}</td>
+							<td>{{challenge.league.name}}</td>
+							<td>{{challenge.score}}</td>
+							<td>{{challenge.starting_time}}</td>
+							<td>{{challenge.ending_time}}</td>
+							<td>
+								<a href={{challenge.get_absolute_url}}>More Info</a>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		{% else %}
+			<h4>You have not created any challenges.</h4>
+		{% endif %}
+			
+		<h3>My Entered Challenges:</h3>
+		{% if entered_challenges %}
+			<table>
+				<thead>
+					<tr>
+						<th>Name:</th>
+						<th>Description:</th>
+						<th>League Name:</th>
+						<th>Score:</th>
+						<th>Starting Time:</th>
+						<th>Ending Time:</th>
+						<th>More Info:</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for challenge in entered_challenges %}
+						<tr>
+							<td>{{challenge.name}}</td>
+							<td>{{challenge.description}}</td>
+							<td>{{challenge.league.name}}</td>
+							<td>{{challenge.score}}</td>
+							<td>{{challenge.starting_time}}</td>
+							<td>{{challenge.ending_time}}</td>
+							<td>
+								<a href={{challenge.get_absolute_url}}>More Info</a>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		{% else %}
+			<h4>You have not entered any challenges.</h4>
+		{% endif %}
+	</div>
+{% endblock %}

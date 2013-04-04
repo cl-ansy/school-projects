@@ -1,0 +1,141 @@
+USE db_project;
+DESCRIBE auth_group;
+DESCRIBE auth_group_permissions;
+DESCRIBE auth_permission;
+DESCRIBE auth_user;
+DESCRIBE auth_user_groups;
+DESCRIBE auth_user_user_permissions;
+DESCRIBE challenge_site_challenge;
+DESCRIBE challenge_site_challengeentry;
+DESCRIBE challenge_site_league;
+DESCRIBE challenge_site_league_members;
+DESCRIBE challenge_site_userprofile;
+DESCRIBE challenge_site_userprofile_friends;
+DESCRIBE challenge_site_validentry;
+DESCRIBE django_admin_log;
+DESCRIBE django_content_type;
+DESCRIBE django_session;
+
+DESCRIBE auth_group;
+Field	Type	Null	Key	Default	Extra
+id	int(11)	NO	PRI	NULL	auto_increment
+name	varchar(80)	NO	UNI	NULL
+	
+DESCRIBE auth_group_permissions;	
+Field	Type	Null	Key	Default	Extra
+id	int(11)	NO	PRI	NULL	auto_increment
+group_id	int(11)	NO	MUL	NULL	
+permission_id	int(11)	NO	MUL	NULL
+
+DESCRIBE auth_permission;	
+Field	Type	Null	Key	Default	Extra
+id	int(11)	NO	PRI	NULL	auto_increment
+name	varchar(50)	NO		NULL	
+content_type_id	int(11)	NO	MUL	NULL	
+codename	varchar(100)	NO		NULL
+
+DESCRIBE auth_user;
+Field	Type	Null	Key	Default	Extra
+id	int(11)	NO	PRI	NULL	auto_increment
+username	varchar(30)	NO	UNI	NULL	
+first_name	varchar(30)	NO		NULL	
+last_name	varchar(30)	NO		NULL	
+email	varchar(75)	NO		NULL	
+password	varchar(128)	NO		NULL	
+is_staff	tinyint(1)	NO		NULL	
+is_active	tinyint(1)	NO		NULL	
+is_superuser	tinyint(1)	NO		NULL	
+last_login	datetime	NO		NULL	
+date_joined	datetime	NO		NULL	
+
+DESCRIBE auth_user_groups;
+Field	Type	Null	Key	Default	Extra
+id	int(11)	NO	PRI	NULL	auto_increment
+user_id	int(11)	NO	MUL	NULL	
+group_id	int(11)	NO	MUL	NULL	
+
+DESCRIBE auth_user_user_permissions;
+Field	Type	Null	Key	Default	Extra
+id	int(11)	NO	PRI	NULL	auto_increment
+user_id	int(11)	NO	MUL	NULL	
+permission_id	int(11)	NO	MUL	NULL
+	
+DESCRIBE challenge_site_challenge;
+Field	Type	Null	Key	Default	Extra
+id	int(11)	NO	PRI	NULL	auto_increment
+name	varchar(200)	NO		NULL	
+description	varchar(200)	NO		NULL	
+score	int(11)	NO		NULL	
+starting_time	datetime	NO		NULL	
+ending_time	datetime	NO		NULL	
+league_id	int(11)	NO	MUL	NULL	
+owner_id	int(11)	NO	MUL	NULL
+	
+DESCRIBE challenge_site_challengeentry;
+Field	Type	Null	Key	Default	Extra
+id	int(11)	NO	PRI	NULL	auto_increment
+response	varchar(2000)	NO		NULL	
+time_started	datetime	NO		NULL	
+time_completed	datetime	NO		NULL	
+correct	tinyint(1)	NO		NULL	
+challenge_id	int(11)	NO	MUL	NULL	
+owner_id	int(11)	NO	MUL	NULL
+
+DESCRIBE challenge_site_league;	
+Field	Type	Null	Key	Default	Extra
+id	int(11)	NO	PRI	NULL	auto_increment
+name	varchar(200)	NO		NULL	
+description	varchar(200)	NO		NULL	
+owner_id	int(11)	NO	MUL	NULL
+
+DESCRIBE challenge_site_league_members;	
+Field	Type	Null	Key	Default	Extra
+id	int(11)	NO	PRI	NULL	auto_increment
+league_id	int(11)	NO	MUL	NULL	
+userprofile_id	int(11)	NO	MUL	NULL	
+
+DESCRIBE challenge_site_userprofile;
+Field	Type	Null	Key	Default	Extra
+id	int(11)	NO	PRI	NULL	auto_increment
+dob	date	YES		NULL	
+user_id	int(11)	NO	UNI	NULL	
+
+DESCRIBE challenge_site_userprofile_friends;
+Field	Type	Null	Key	Default	Extra
+id	int(11)	NO	PRI	NULL	auto_increment
+from_userprofile_id	int(11)	NO	MUL	NULL	
+to_userprofile_id	int(11)	NO	MUL	NULL	
+
+DESCRIBE challenge_site_validentry;
+Field	Type	Null	Key	Default	Extra
+id	int(11)	NO	PRI	NULL	auto_increment
+name	varchar(200)	NO		NULL	
+description	varchar(200)	NO		NULL	
+response	varchar(2000)	NO		NULL	
+challenge_id	int(11)	NO	MUL	NULL	
+owner_id	int(11)	NO	MUL	NULL	
+
+DESCRIBE django_admin_log;
+Field	Type	Null	Key	Default	Extra
+id	int(11)	NO	PRI	NULL	auto_increment
+action_time	datetime	NO		NULL	
+user_id	int(11)	NO	MUL	NULL	
+content_type_id	int(11)	YES	MUL	NULL	
+object_id	longtext	YES		NULL	
+object_repr	varchar(200)	NO		NULL	
+action_flag	smallint(5) unsigned	NO		NULL	
+change_message	longtext	NO		NULL	
+
+DESCRIBE django_content_type;
+Field	Type	Null	Key	Default	Extra
+id	int(11)	NO	PRI	NULL	auto_increment
+name	varchar(100)	NO		NULL	
+app_label	varchar(100)	NO	MUL	NULL	
+model	varchar(100)	NO		NULL	
+
+DESCRIBE django_session;
+Field	Type	Null	Key	Default	Extra
+session_key	varchar(40)	NO	PRI	NULL	
+session_data	longtext	NO		NULL	
+expire_date	datetime	NO	MUL	NULL	
+

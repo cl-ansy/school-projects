@@ -1,0 +1,26 @@
+<!-- templates/challenge_detail.html -->
+{% extends "base.html" %}
+{% block content_pane %}
+	<table>
+		<thead>
+			<tr>
+				<th>Challenge:</th>
+				<th>Response:</th>
+				<th>Time Started:</th>
+				<th>Time Completed:</th>
+				<th>Correct?</th>
+				<th>Owner:</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>{{challenge_entry.challenge.name}}</td>
+				<td>{{challenge_entry.response}}</td>
+				<td>{{challenge_entry.time_started}}</td>
+				<td>{{challenge_entry.time_completed}}</td>
+				<td>{{challenge_entry.correct|yesno:"Yes.,No.,Unknown."}}</td>
+				<td>{{challenge_entry.owner.user.username}}</td>
+			</tr>
+		</tbody>
+	</table>
+{% endblock %}

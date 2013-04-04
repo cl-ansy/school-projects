@@ -1,0 +1,219 @@
+<!--templates/base.html-->
+{% comment %}
+	Use challenge_site/context_processors.py to fill extra variables here as needed 
+{% endcomment %}
+<html>
+<head>
+	<title>
+		{% block title %}Challenge Site{% endblock %}
+	</title>
+	{% block head %}
+	<style>
+	
+		div{
+			border-radius:10px;
+		}
+		#page {
+			margin-left: auto;
+			margin-right: auto;
+			padding-bottom:15px;
+			width: 1200px;
+			overflow:auto;
+			background-color:#d9ae71;
+		}
+		#logout_link #login a:link, a:hover, a:visited{
+			color:95aec6;
+		}
+		div#header {
+			border-radius:10px;
+			background-color:#4e6e8d;
+			color:#ecd2ae;
+			{% if request.user.is_authenticated %}
+				height: 130px;
+			{% else %}
+				height: 210px;		
+			{% endif %}
+			width:100%;
+			
+		}
+		#page_title {
+			float: left;
+			font-family:"Baskerville";
+			font-size:4em;
+			padding: 0 0 0 20;
+			margin: 30 0 0 0;
+		}
+		div#header_login {
+			
+			background-color:#465869;
+			float:right;
+			/*height:85%;*/
+			{% if request.user.is_authenticated %}
+				height: 95px;
+			{% else %}
+				height: 180px;		
+			{% endif %}
+			margin: 1% 1% 1% 1%;
+			padding: 2px 15px 2px 15px;
+			//width:18%
+		}
+		#login_form {
+			display:inline;
+		}
+		#welcome, #login, #register {
+			font-family:"Georgia";
+			font-size:1em;
+			margin: 5px 5px 5px 5px;
+			text-align: center;
+		}
+		input#id_username, label[for=id_username], input#id_password, label[for=id_password] {
+			display:block;
+			margin-left:auto;
+			margin-right:auto;
+			width:90%;
+		}
+		#login_submit {
+			display:inline;
+			margin: 15 auto 0 auto;
+		}
+		#not_user, #logout_link, #not_registered, #register_link {
+			display:inline;
+			font-family:"Georgia";
+			font-size:.8em;
+			text-align: center;
+		}
+		#register {
+			display:block;
+			margin-left:auto;
+			margin-right:auto;
+		}
+		#logout {
+			margin-left: auto;
+			margin-right: auto;
+			text-align:center;
+		}
+		#sidebar {
+			float:left;
+			display:block;
+			vertical-align:top;
+			width:21%;
+		}
+		#content_table {
+			margin-left:auto;
+			margin-right:auto;
+			width:100%;
+		}
+		#content_pane {
+			margin-top:30px;
+			padding-top:20px;
+			padding-left:30px;
+			margin-left:10px;
+			float:left;
+			display:block;
+			background-color:#E0E0E0;
+			vertical-align:top;
+			width: 890px;
+			min-height:670px;
+			color:#193b5b;
+		}
+		ul#navbar{
+		    list-style:none;
+		    padding: 10 0 0 10;
+		}
+		li.{{navbar_item_class.css_class}} {
+			margin: 5px 5px 5px 5px;
+			padding: 5px 5px 5px 5px;
+			color:white;
+			background-color:#193b5b;
+			border-radius:5px;
+			
+		}
+		li.{{navbar_item_class.css_class}}:hover{
+			background-color:#4e6e8d;
+			transition: background-color 1s;
+			-moz-transition: background-color 1s; 
+			-webkit-transition: background-color 1s;
+		}
+		a.{{navbar_item_class.css_class}} {
+		    color:black;
+			font-size:1.5em;		    
+		    text-decoration:none;
+		    
+		}
+		table{
+			width:96%;
+			border-collapse:collapse;
+		}
+		th{
+			text-align: left;
+		}
+		td{
+			width:100px;
+			border: grey solid 1px;
+			padding: 3 3 3 6;
+			border-radius:3px;
+			
+		}
+		td ul{
+			list-style-type:none;
+			padding: 0 0 0 0;
+		}
+        
+	</style>
+	{% endblock %}
+</head>
+<body>
+	<div id="page">
+		<div id="header">		    
+		{% block header %}
+		
+		<h1 id="page_title">Challenge Site</h1>
+			{% block header_login %}
+			<div id="header_login">
+				{% if request.user.is_authenticated %}
+					<p>
+						<h3 id="welcome">Hello, {{request.user.username}}.</h3>
+						<div id="logout">
+							<h3 id="not_user">Not {{request.user.username}}?</h3>
+							<a id ="logout_link" href="/logout/">logout.</a>
+						</div>
+					<p>
+				{% else %}
+					<h3 id="login">Login</h3>
+					<form id="login_form" action="/login/" method="post">
+						{% csrf_token %}
+						{{login_form}}
+						<input type="hidden" name="next" value="/my_profile/"/>
+						<div id="register">
+							<input id="login_submit" type="submit" value="Login" />
+							<h3 id="not_registered">New?</h3>
+							<a id ="register_link" href="/register/">Register.</a>
+						</div>
+					</form>
+				{% endif %}
+			</div>
+			{% endblock %}
+		{% endblock %}
+		</div>
+			<div id="sidebar">
+			    <ul id="navbar">
+			    	{% for navbar_item in navbar_items %}
+			    	<a class="{{navbar_item_class.css_class}}" href="{{navbar_item.link}}">
+				        <li class="{{navbar_item_class.css_class}}">
+				            {{navbar_item.display_name}}
+				        </li>
+			        </a>
+			        {% endfor %}
+			    </ul>
+				{% block sidebar %}
+				
+				{% endblock %}
+			</div>
+			<div id="content_pane">
+				{% block content_pane %}
+				
+				{% endblock %}
+			</div>
+	</div>
+</body>
+</html>

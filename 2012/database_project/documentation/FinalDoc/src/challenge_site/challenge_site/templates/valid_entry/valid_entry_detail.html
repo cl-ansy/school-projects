@@ -1,0 +1,23 @@
+<!-- templates/challenge_detail.html -->
+{% extends "base.html" %}
+{% block content_pane %}
+	<h2>Valid Entry: {{valid_entry.name}}</h2>
+	<table>
+		<thead>
+			<tr>
+				<th>Challenge:</th>
+				<th>Description:</th>					
+				<th>Response:</th>
+				<th>Owner:</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>{{valid_entry.challenge.name}}</td>
+				<td>{{valid_entry.description}}</td>
+				<td>{{valid_entry.response}}</td>
+				<td>{{valid_entry.owner.user.username}}</td>
+			</tr>
+		</tbody>
+	</table>
+{% endblock %}

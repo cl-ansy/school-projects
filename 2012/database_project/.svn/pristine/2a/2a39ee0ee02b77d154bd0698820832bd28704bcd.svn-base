@@ -1,0 +1,37 @@
+<!-- templates/challenges.html -->
+{% extends "base.html" %}
+{% block content_pane %}
+	{% if challenges %}
+		<h3>Challenges:</h3>
+		<table>
+			<thead>
+				<tr>
+					<th>Name:</th>
+					<th>Description:</th>
+					<th>League Name:</th>
+					<th>Score:</th>
+					<th>Starting Time:</th>
+					<th>Ending Time:</th>
+					<th>More Info:</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for challenge in challenges %}
+					<tr>
+						<td>{{challenge.name}}</td>
+						<td>{{challenge.description}}</td>
+						<td>{{challenge.league.name}}</td>
+						<td>{{challenge.score}}</td>
+						<td>{{challenge.starting_time}}</td>
+						<td>{{challenge.ending_time}}</td>
+						<td>
+							<a href={{challenge.get_absolute_url}}>More Info</a>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	{% else %}
+		<h4>There are no Challenges.</h4>	
+	{% endif %}
+{% endblock %}

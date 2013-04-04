@@ -1,0 +1,35 @@
+<!-- templates/valid_entry/valid_entries.html -->
+{% extends "base.html" %}
+{% block content_pane %}
+	{% if valid_entries %}
+		<h3>Valid Entries:</h3>
+		<table>
+			<thead>
+				<tr>
+					<th>Challenge:</th>
+					<th>Name:</th>
+					<th>Description:</th>					
+					<th>Response:</th>
+					<th>Owner:</th>
+					<th>More Info:</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for entry in valid_entries %}
+					<tr>
+						<td>{{entry.challenge.name}}</td>
+						<td>{{entry.name}}</td>
+						<td>{{entry.description}}</td>
+						<td>{{entry.response}}</td>
+						<td>{{entry.owner.user.username}}</td>
+						<td>
+							<a href={{entry.get_absolute_url}}>More Info</a>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	{% else %}
+		<h4>There are no Valid Entries.</h4>	
+	{% endif %}
+{% endblock %}

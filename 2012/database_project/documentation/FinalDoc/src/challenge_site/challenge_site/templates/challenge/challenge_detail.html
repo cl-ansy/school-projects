@@ -1,0 +1,21 @@
+<!-- templates/challenge/challenge_detail.html -->
+{% extends "base.html" %}
+{% block content_pane %}
+	<h2>Challenge: {{challenge.name}}
+	<table>
+		<thead>
+			<th>Description:</th>
+			<th>League:</th>
+			<th>Score:</th>
+			<th>Starting Time:</th>
+			<th>Ending Time:</th>
+		</thead>
+		<tbody><tr>
+			<td>{{challenge.description}}</td>
+			<td>{{challenge.league.name}}</td>
+			<td>{{challenge.score}}</td>
+			<td>{{challenge.starting_time}}</td>
+			<td>{{challenge.ending_time}}</td>
+		</tr></tbody>
+	<table>
+{% endblock %}

@@ -1,0 +1,10 @@
+<!-- templates/about.html -->
+{% extends "base.html" %}
+{% block content_pane %}
+	<style>
+		h2#message {
+			margin: 15 15 15 15;
+		}
+	</style>
+	<h2 id="message">{{message}}</h2>
+{% endblock %}

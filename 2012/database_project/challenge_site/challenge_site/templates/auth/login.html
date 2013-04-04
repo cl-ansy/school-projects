@@ -1,0 +1,24 @@
+<!--templates/registration/login.html-->
+{% extends "base.html" %}
+{% block head %}
+	{{block.super}}
+	<style>
+		#login_container {
+			float:left;
+			padding: 5 5 5 5;
+		}
+	</style>
+{% endblock %}
+{% block header_login %}
+{% endblock %}
+{% block content_pane %}
+<div id="login_container">
+	<h3 id="login">Login</h3>
+	<form action="/login/" method="post">
+		{% csrf_token %}
+		<input type="hidden" name="next" value="/"/>
+		{{form.as_p}}
+		<input type="submit" value="Login" />
+	</form>
+</div>
+{% endblock %}
